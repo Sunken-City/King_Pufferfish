@@ -6,7 +6,6 @@ public class Ink : MonoBehaviour
 {
 	public bool mouseDown = false;
 	public bool mouseOver = false;
-
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,7 +17,13 @@ public class Ink : MonoBehaviour
 	{
 		if (mouseDown && mouseOver) 
 		{
-
+			Color inkColor = GetComponent<SpriteRenderer>().color;
+			inkColor.a -= 0.01f;
+			GetComponent<SpriteRenderer>().color = inkColor;
+			if (inkColor.a <= 0.0f) 
+			{
+				Destroy(this.gameObject);
+			}
 		}
 	}
 	
