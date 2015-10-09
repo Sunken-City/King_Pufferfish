@@ -5,7 +5,8 @@ using System.Collections;
 public class Ink : MonoBehaviour
 {
 	public bool mouseOver = false;
-
+	//Higher resistance means harder to scrub.
+	public float inkScrubResistance = 10.0f;
 	static bool mouseDown = false;
 	static Vector2 previousMousePosition;
 	static Camera sceneCamera;
@@ -13,6 +14,7 @@ public class Ink : MonoBehaviour
 	void Start () 
 	{
 		sceneCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
+		//We start up a coroutine that runs in the background, grabbing the mouse's new position every 1/10th of a second.
 		StartCoroutine ("GetPreviousMousePosition");
 	}
 	
@@ -25,10 +27,10 @@ public class Ink : MonoBehaviour
 			if(mouseOver)
 			{
 				Color inkColor = GetComponent<SpriteRenderer>().color;
-
+				//Take our current mouse position and subtract the previous position to get a vector between the two
 				Vector2 mouseDistanceTravelledThisFrame = currentMousePosition - previousMousePosition;
-				float swipeStrength = mouseDistanceTravelledThisFrame.magnitude / 10.0f;
-				Debug.Log(currentMousePosition + " - " + previousMousePosition + " = " + swipeStrength);
+				//Divide the magnitude by the resistance value. Subtract this value from the ink's alpha value
+				float swipeStrength = mouseDistanceTravelledThisFrame.magnitude / inkScrubResistance;
 				inkColor.a -= swipeStrength;
 				GetComponent<SpriteRenderer>().color = inkColor;
 				if (inkColor.a <= 0.0f) 
