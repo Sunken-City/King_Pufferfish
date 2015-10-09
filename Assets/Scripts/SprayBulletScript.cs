@@ -1,36 +1,62 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class SprayBulletScript : MonoBehaviour
 {
 
-    public float bulletSpeed = 1.0f;
-    public GameObject Bullet;
+	public float bulletSpeed = 1.0f;
+	public GameObject Bullet;
+
+	private bool mouseOver = false;
+
+	public int numberBullets = 7;
 
 
-    void Start()
-    {
-    }
+	void Start()
+	{
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
+	}
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            GameObject thisBullet = (GameObject)GameObject.Instantiate(Bullet);
-            thisBullet.transform.position = GameObject.Find("Player").transform.position;
+	public void OnMouseDown()
+	{
+		float angleIncrement = 180.0f / ((float)numberBullets - 1.0f);
 
-            Vector3 ViewmousePos = GameObject.Find("Main Camera").GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition);
-            Vector3 WorldmousePos = GameObject.Find("Main Camera").GetComponent<Camera>().ViewportToWorldPoint(ViewmousePos);
+		if (mouseOver)
+		{
+			Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
-			Vector2 DirectionToMouse = (Vector2)WorldmousePos.normalized;
-			float angle = (Mathf.Atan2(DirectionToMouse.y, DirectionToMouse.x) * Mathf.Rad2Deg) - 90.0f;
-			thisBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+			for (float angle = 0; angle <= 180; angle += angleIncrement)
+			{
+				GameObject thisBullet = (GameObject)GameObject.Instantiate(Bullet);
+				thisBullet.transform.position = playerPosition;
+				thisBullet.transform.rotation = Quaternion.AngleAxis(angle - 90.0f, new Vector3(0.0f, 0.0f, 1.0f));
 
-            Vector2 bulletDirection = (new Vector2(((Vector2)(WorldmousePos - thisBullet.transform.position)).normalized.x, ((Vector2)(WorldmousePos - thisBullet.transform.position)).normalized.y) * bulletSpeed);
-            thisBullet.GetComponent<Rigidbody2D>().velocity = (bulletDirection);
-        }
+				Vector3 bulletDirection = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0.0f);
+				Vector3 bulletVelocity = bulletDirection * bulletSpeed;
 
-    }
+				thisBullet.GetComponent<Rigidbody2D>().velocity = (Vector2)(bulletVelocity);
+				thisBullet.transform.position += bulletVelocity.normalized;
+			}
+		}
+	}
+
+	public void OnMouseUp()
+	{
+		
+	}
+
+	public void OnMouseEnter()
+	{
+		mouseOver = true;
+	}
+
+	public void OnMouseExit()
+	{
+		mouseOver = false;
+	}
 }
