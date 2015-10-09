@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletDestroyScript : MonoBehaviour {
+public class Octopus : MonoBehaviour {
     
     public GameObject DeathParticle;
 
@@ -13,6 +13,7 @@ public class BulletDestroyScript : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+		GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Cos (Time.time), GetComponent<Rigidbody2D>().velocity.y);
     }
 
 	void OnTriggerEnter2D(Collider2D WhoCollidedWithMe)
