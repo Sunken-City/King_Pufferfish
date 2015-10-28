@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 89af882f21da10243acd3e646dc5699c
+timeCreated: 1442721033
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - DeathParticle: {fileID: 118960, guid: dad89186f0711374199e577cc726f0e4, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
