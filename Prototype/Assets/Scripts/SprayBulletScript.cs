@@ -9,12 +9,15 @@ public class SprayBulletScript : MonoBehaviour
 	public GameObject Bullet;
 
 	private bool mouseOver = false;
+    private float timerStart;
 
-	public int numberBullets = 7;
+    public int numberBullets = 7;
 
 
 	void Start()
 	{
+        //Start timer -JLL
+        timerStart = Time.time;
 	}
 
 	// Update is called once per frame
@@ -26,7 +29,8 @@ public class SprayBulletScript : MonoBehaviour
 	{
 		float angleIncrement = 180.0f / ((float)numberBullets - 1.0f);
 
-		if (mouseOver)
+        //Added timer on chargeshot -JLL
+		if ((mouseOver) && (Time.time >= timerStart + 10.0f))
 		{
 			Vector3 playerPosition = GameObject.Find("Player").transform.position;
 
@@ -42,7 +46,10 @@ public class SprayBulletScript : MonoBehaviour
 
 				thisBullet.GetComponent<Rigidbody2D>().velocity = (Vector2)(bulletVelocity);
 				thisBullet.transform.position += bulletVelocity.normalized;
-			}
+
+                //Reset timer to current -JLL
+                timerStart = Time.time;
+            }
 		}
 	}
 

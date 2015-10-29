@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
         timerStart = Time.time;
     }
     // Update is called once per frame
-    void Update()
+    void OnMouseDown()
     {
         //Register mouse tap or touch. Shoot if cooldown is over
         if (Input.GetKeyDown(KeyCode.Mouse0) && (Time.time >= timerStart + 0.2f))

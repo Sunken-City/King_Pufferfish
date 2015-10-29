@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class Octopus : MonoBehaviour {
-	
-	public GameObject DeathInkParticle;
+
+    public GameObject DeathInkParticle;
+    public AudioClip inkSplatSound;
 
 	// Use this for initialization
 	void Start () 
@@ -24,7 +25,7 @@ public class Octopus : MonoBehaviour {
             GameController.instance.AddScore(1);
             //Spawn a particle on dead enemy
             GameObject inkParticle = (GameObject)GameObject.Instantiate(DeathInkParticle, new Vector3(transform.position.x, transform.position.y, -5), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-
+            GameController.instance.PlaySound(inkSplatSound);
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-10f, 10f), Random.Range(20f, 40f)) * 30);
 			//Destroy bullet and enemy
 			Destroy(WhoCollidedWithMe.gameObject);

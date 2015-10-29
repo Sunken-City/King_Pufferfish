@@ -4,8 +4,10 @@ using System.Collections;
 public class UnderwaterMine : MonoBehaviour {
 
 	private float spawnTime;
-
 	private GameObject[] Enemies;
+	public GameObject DeathInkParticle;
+	public AudioClip explosionSound;
+
 	
 	// Use this for initialization
 	void Start () 
@@ -23,13 +25,8 @@ public class UnderwaterMine : MonoBehaviour {
 	{
 		if (WhoCollidedWithMe.tag == "Bullet")
 		{
-			//Spawn a particle on dead enemy
-			//GameObject inkParticle = (GameObject)GameObject.Instantiate(DeathInkParticle, new Vector3(transform.position.x, transform.position.y, -5), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-
-			//GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-10f, 10f), Random.Range(20f, 40f)) * 30);
-			//Destroy bullet and enemy
 			Destroy(WhoCollidedWithMe.gameObject);
-
+			GameController.instance.PlaySound(explosionSound);
 			if(Enemies == null)
 			{
 				Enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -37,8 +34,16 @@ public class UnderwaterMine : MonoBehaviour {
 
 			foreach(GameObject enemy in Enemies)
 			{
-				Destroy(enemy);
+				GameObject inkParticle = (GameObject)GameObject.Instantiate(DeathInkParticle, new Vector3(enemy.transform.position.x, enemy.transform.position.y, -5), Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+				enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-10f, 10f), Random.Range(20f, 40f)) * 30);
 			}
+
+			foreach (GameObject enemy in Enemies)
+			{
+				Destroy(enemy, 2.0f);
+			}
+
+			HealthWall.health--;
 
 			DestroyObject(gameObject);
 		}
