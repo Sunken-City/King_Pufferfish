@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2b7819b9d8d71734f995d447988cd9e0
+timeCreated: 1448138493
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - wallNoHit: {fileID: 21300000, guid: e2a21438a1a5e1d4ebb9c7ccca043506, type: 3}
+  - wallOneHit: {fileID: 21300000, guid: 42a45b843d26142439f68c64b6505ee0, type: 3}
+  - wallTwoHits: {fileID: 21300000, guid: 2a169a903a81fd64c92cb02cb09f38d7, type: 3}
+  - WallDamagePartcle: {fileID: 19839902, guid: 82a4581e836d03c4c8d0bd5febdbdf81,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
